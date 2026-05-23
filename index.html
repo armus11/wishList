@@ -1,665 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Wishlist ✦</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Wishlist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --cream: #FAF6EF;
-    --cream-dark: #F0EAE0;
-    --espresso: #2D1B0E;
-    --bark: #6B4226;
-    --terracotta: #C4622D;
-    --gold: #C9973B;
-    --sage: #5A7A5A;
-    --dusty: #8C7B6E;
-    --white: #FDFAF6;
-    --shadow: rgba(45, 27, 14, 0.08);
-  }
+    :root {
+      --cream:   #F9F5EE;
+      --paper:   #F0EAD6;
+      --ink:     #2A2118;
+      --muted:   #7A6E60;
+      --accent:  #B5763A;
+      --line:    #D8CEB8;
+      --tag-bg:  #EDE4D0;
+    }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background-color: var(--cream);
-    color: var(--espresso);
-    min-height: 100vh;
-    font-size: 15px;
-    line-height: 1.6;
-  }
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
 
-  /* HEADER */
-  header {
-    background: var(--espresso);
-    color: var(--cream);
-    padding: 3rem 2rem 2.5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 30% 50%, rgba(201,151,59,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 30%, rgba(196,98,45,0.1) 0%, transparent 50%);
-  }
-  header h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    position: relative;
-    line-height: 1.1;
-  }
-  header h1 em { font-style: italic; color: var(--gold); }
-  header p {
-    font-size: 0.85rem;
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(250,246,239,0.55);
-    margin-top: 0.75rem;
-    position: relative;
-  }
-  .header-ornament {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin: 1.2rem 0 0;
-    position: relative;
-  }
-  .header-ornament span { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.3em; opacity: 0.6; }
-  .header-ornament hr { flex: 1; max-width: 80px; border: none; border-top: 1px solid rgba(201,151,59,0.3); }
+    /* ── Texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  /* TOOLBAR */
-  .toolbar {
-    background: var(--white);
-    border-bottom: 1px solid var(--cream-dark);
-    padding: 0.85rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px var(--shadow);
-  }
-  .toolbar-stats {
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--dusty);
-    font-weight: 500;
-    margin-right: auto;
-  }
-  .toolbar-stats strong { color: var(--espresso); }
-  .filter-tabs { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-  .filter-tab {
-    padding: 0.3rem 0.85rem;
-    border-radius: 999px;
-    border: 1px solid var(--cream-dark);
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--dusty);
-    cursor: pointer;
-    transition: all 0.18s;
-    letter-spacing: 0.03em;
-  }
-  .filter-tab:hover { border-color: var(--bark); color: var(--bark); }
-  .filter-tab.active { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
-  .add-btn {
-    padding: 0.45rem 1.2rem;
-    background: var(--terracotta);
-    color: white;
-    border: none;
-    border-radius: 999px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 500;
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    transition: all 0.18s;
-    white-space: nowrap;
-  }
-  .add-btn:hover { background: var(--bark); transform: translateY(-1px); }
+    /* ── Layout ── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
 
-  /* MAIN */
-  main {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 4rem;
-  }
-  .empty-state {
-    text-align: center;
-    padding: 5rem 2rem;
-    display: none;
-  }
-  .empty-state.visible { display: block; }
-  .empty-ornament {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 5rem;
-    color: var(--cream-dark);
-    line-height: 1;
-    margin-bottom: 1rem;
-  }
-  .empty-state h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
-    font-weight: 400;
-    color: var(--dusty);
-    margin-bottom: 0.5rem;
-  }
-  .empty-state p { color: var(--dusty); font-size: 0.88rem; font-weight: 300; }
+    /* ── Header ── */
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 56px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
 
-  /* GRID */
-  .wishlist-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
+    .eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
 
-  /* CARD */
-  .wish-card {
-    background: var(--white);
-    border-radius: 16px;
-    border: 1px solid rgba(45,27,14,0.07);
-    padding: 1.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    transition: transform 0.22s, box-shadow 0.22s;
-    animation: cardIn 0.3s ease both;
-    position: relative;
-  }
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .wish-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px var(--shadow); }
-  .wish-card.received { opacity: 0.55; }
-  .wish-card.received .wish-name { text-decoration: line-through; }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
 
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-  .category-badge {
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    flex-shrink: 0;
-  }
-  .cat-wish       { background: #EEE9F5; color: #6B4FA0; }
-  .cat-need       { background: #E8F2E8; color: #3A6B3A; }
-  .cat-experience { background: #FEF0E6; color: #A0502A; }
-  .cat-book       { background: #E6EEF8; color: #2A5080; }
-  .cat-tech       { background: #E8F5F2; color: #2A6B5A; }
-  .cat-other      { background: #F2EEE8; color: #6B5A42; }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
 
-  .wish-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--espresso);
-    flex: 1;
-  }
-  .priority-stars { display: flex; gap: 2px; }
-  .star { font-size: 0.8rem; }
-  .star.filled { color: var(--gold); }
-  .star.empty { color: var(--cream-dark); }
+    .subtitle {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+    }
 
-  .wish-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .wish-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: var(--terracotta);
-  }
-  .wish-link {
-    font-size: 0.75rem;
-    color: var(--sage);
-    text-decoration: none;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.15s;
-  }
-  .wish-link:hover { border-color: var(--sage); }
-  .wish-link::after { content: '↗'; font-size: 0.7rem; }
+    /* ── Stats bar ── */
+    .stats {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
 
-  .wish-notes {
-    font-size: 0.82rem;
-    color: var(--dusty);
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
 
-  .card-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.4rem;
-    padding-top: 0.8rem;
-    border-top: 1px solid var(--cream-dark);
-  }
-  .btn-action {
-    padding: 0.3rem 0.8rem;
-    border-radius: 999px;
-    border: 1px solid var(--cream-dark);
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-    color: var(--dusty);
-    transition: all 0.15s;
-    letter-spacing: 0.03em;
-  }
-  .btn-action:hover { border-color: var(--bark); color: var(--bark); background: var(--cream); }
-  .btn-received.active { background: var(--sage); color: white; border-color: var(--sage); }
-  .btn-delete { margin-left: auto; color: #C4622D55; border-color: transparent; }
-  .btn-delete:hover { color: var(--terracotta); background: #FEF0E6; border-color: var(--terracotta); }
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1;
+    }
 
-  /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(45,27,14,0.45);
-    z-index: 500;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    backdrop-filter: blur(3px);
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 2rem;
-    width: 100%;
-    max-width: 480px;
-    animation: modalIn 0.25s ease both;
-    box-shadow: 0 20px 60px rgba(45,27,14,0.2);
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.95) translateY(8px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-  .modal h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.7rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: var(--espresso);
-  }
-  .form-group { margin-bottom: 1.1rem; }
-  .form-group label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--dusty);
-    margin-bottom: 0.4rem;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 0.6rem 0.9rem;
-    border: 1px solid var(--cream-dark);
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--espresso);
-    background: var(--cream);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus { border-color: var(--bark); }
-  .form-group textarea { resize: vertical; min-height: 70px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .star-picker {
-    display: flex;
-    gap: 4px;
-  }
-  .star-picker button {
-    font-size: 1.4rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 2px;
-    transition: transform 0.1s;
-  }
-  .star-picker button:hover { transform: scale(1.2); }
-  .modal-actions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-  }
-  .btn-cancel {
-    flex: 1;
-    padding: 0.7rem;
-    background: var(--cream);
-    border: 1px solid var(--cream-dark);
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    cursor: pointer;
-    color: var(--dusty);
-    transition: all 0.15s;
-    font-weight: 500;
-  }
-  .btn-cancel:hover { background: var(--cream-dark); }
-  .btn-save {
-    flex: 2;
-    padding: 0.7rem;
-    background: var(--espresso);
-    color: var(--cream);
-    border: none;
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    cursor: pointer;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    transition: all 0.15s;
-  }
-  .btn-save:hover { background: var(--bark); }
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 2rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    color: var(--dusty);
-    text-transform: uppercase;
-    font-weight: 300;
-  }
-  footer span { color: var(--terracotta); }
-</style>
+    /* ── Table ── */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      padding: 0 16px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    thead th:first-child { padding-left: 0; }
+    thead th:last-child  { text-align: right; padding-right: 0; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--line);
+      transition: background 0.15s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--tag-bg); }
+
+    tbody td {
+      padding: 20px 16px;
+      vertical-align: top;
+    }
+
+    tbody td:first-child { padding-left: 0; }
+    tbody td:last-child  { text-align: right; padding-right: 0; }
+
+    /* Item name */
+    .item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .item-note {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* Category tag */
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      border: 1px solid var(--line);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    /* Priority dot */
+    .priority {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-high   { background: #C0533A; }
+    .dot-medium { background: #B5763A; }
+    .dot-low    { background: #8B9E6A; }
+
+    /* Price */
+    .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    /* Link */
+    .link-btn {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+      transition: opacity 0.15s;
+    }
+
+    .link-btn:hover { opacity: 0.6; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ── Mobile: card layout ── */
+    @media (max-width: 600px) {
+      .page { padding: 36px 16px 80px; }
+
+      header { margin-bottom: 36px; }
+
+      .stats { gap: 20px; }
+
+      table, thead, tbody, th, td, tr { display: block; }
+
+      thead { display: none; }
+
+      tbody tr {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        margin-bottom: 12px;
+        padding: 18px 16px;
+      }
+
+      tbody tr:hover { background: var(--tag-bg); }
+
+      tbody td {
+        padding: 0;
+        text-align: left !important;
+        padding-bottom: 10px;
+      }
+
+      tbody td:last-child { padding-bottom: 0; }
+      tbody td:first-child { padding-left: 0; }
+
+      .mobile-label {
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .row-meta {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    /* Show mobile labels only on mobile */
+    .mobile-label { display: none; }
+    @media (max-width: 600px) {
+      .mobile-label { display: block; }
+    }
+
+    /* ── Fade-in animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header   { animation: fadeUp 0.6s ease both; }
+    .stats   { animation: fadeUp 0.6s 0.1s ease both; }
+    table    { animation: fadeUp 0.6s 0.2s ease both; }
+  </style>
 </head>
 <body>
+  <div class="page">
 
-<header>
-  <h1>My <em>Wishlist</em></h1>
-  <p>Things I'm dreaming of</p>
-  <div class="header-ornament">
-    <hr><span>✦ ✦ ✦</span><hr>
-  </div>
-</header>
+    <header>
+      <span class="eyebrow">Personal</span>
+      <h1>My <em>Wishlist</em></h1>
+      <p class="subtitle">Last updated: June 2025</p>
+    </header>
 
-<div class="toolbar">
-  <div class="toolbar-stats">
-    <strong id="stat-count">0</strong> wishes · <strong id="stat-received">0</strong> received
-  </div>
-  <div class="filter-tabs" id="filter-tabs">
-    <button class="filter-tab active" data-cat="all">All</button>
-    <button class="filter-tab" data-cat="wish">Wish</button>
-    <button class="filter-tab" data-cat="need">Need</button>
-    <button class="filter-tab" data-cat="experience">Experience</button>
-    <button class="filter-tab" data-cat="book">Book</button>
-    <button class="filter-tab" data-cat="tech">Tech</button>
-    <button class="filter-tab" data-cat="other">Other</button>
-  </div>
-  <button class="add-btn" onclick="openModal()">+ Add wish</button>
-</div>
-
-<main>
-  <div class="empty-state" id="empty-state">
-    <div class="empty-ornament">✦</div>
-    <h2>Your wishlist is empty</h2>
-    <p>Start adding things you're dreaming of.</p>
-  </div>
-  <div class="wishlist-grid" id="wishlist-grid"></div>
-</main>
-
-<footer>Made with <span>♥</span> · Hosted on GitHub Pages</footer>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
-  <div class="modal">
-    <h2 id="modal-title">New wish</h2>
-    <div class="form-group">
-      <label>What do you want?</label>
-      <input type="text" id="f-name" placeholder="e.g. Vintage leather journal…">
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Category</label>
-        <select id="f-category">
-          <option value="wish">Wish</option>
-          <option value="need">Need</option>
-          <option value="experience">Experience</option>
-          <option value="book">Book</option>
-          <option value="tech">Tech</option>
-          <option value="other">Other</option>
-        </select>
+    <!-- Stats bar — counts auto-update via JS -->
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-value" id="total-count">—</span>
+        <span class="stat-label">Items</span>
       </div>
-      <div class="form-group">
-        <label>Price (optional)</label>
-        <input type="text" id="f-price" placeholder="e.g. $45">
+      <div class="stat">
+        <span class="stat-value" id="high-count">—</span>
+        <span class="stat-label">High priority</span>
       </div>
     </div>
-    <div class="form-group">
-      <label>Link (optional)</label>
-      <input type="url" id="f-url" placeholder="https://…">
+
+    <div class="table-wrapper">
+      <table id="wishlist-table">
+        <thead>
+          <tr>
+            <th style="width:35%">Item</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ═══════════════════════════════════════════════════════════
+               HOW TO EDIT THIS LIST
+               ───────────────────────────────────────────────────────────
+               Copy one <tr>…</tr> block below, paste it, and fill in:
+                 • .item-name      — the name of the item
+                 • .item-note      — optional short description
+                 • .tag            — category label (anything you like)
+                 • .dot class      — dot-high / dot-medium / dot-low
+                 • priority text   — "High" / "Medium" / "Low"
+                 • .price          — price (use "~" for approximate)
+                 • href on <a>     — URL, or remove the <a> entirely
+               ═══════════════════════════════════════════════════════════ -->
+
+          <tr>
+            <td>
+              <span class="item-name">Sony WH-1000XM5 Headphones</span>
+              <span class="item-note">Wireless noise-cancelling, black colourway</span>
+            </td>
+            <td>
+              <span class="mobile-label">Category</span>
+              <span class="tag">Tech</span>
+            </td>
+            <td>
+              <span class="mobile-label">Priority</span>
+              <span class="priority"><span class="dot dot-high"></span>High</span>
+            </td>
+            <td>
+              <span class="mobile-label">Price</span>
+              <span class="price">~$280</span>
+            </td>
+            <td>
+              <span class="mobile-label">Link</span>
+              <a class="link-btn" href="https://www.sony.com" target="_blank" rel="noopener">View →</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="item-name">Moleskine Large Hardcover</span>
+              <span class="item-note">Dotted pages, black cover</span>
+            </td>
+            <td>
+              <span class="mobile-label">Category</span>
+              <span class="tag">Stationery</span>
+            </td>
+            <td>
+              <span class="mobile-label">Priority</span>
+              <span class="priority"><span class="dot dot-medium"></span>Medium</span>
+            </td>
+            <td>
+              <span class="mobile-label">Price</span>
+              <span class="price">~$25</span>
+            </td>
+            <td>
+              <span class="mobile-label">Link</span>
+              <a class="link-btn" href="https://www.moleskine.com" target="_blank" rel="noopener">View →</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="item-name">Kindle Paperwhite (2024)</span>
+              <span class="item-note">16 GB, without ads</span>
+            </td>
+            <td>
+              <span class="mobile-label">Category</span>
+              <span class="tag">Tech</span>
+            </td>
+            <td>
+              <span class="mobile-label">Priority</span>
+              <span class="priority"><span class="dot dot-high"></span>High</span>
+            </td>
+            <td>
+              <span class="mobile-label">Price</span>
+              <span class="price">~$160</span>
+            </td>
+            <td>
+              <span class="mobile-label">Link</span>
+              <a class="link-btn" href="https://www.amazon.com" target="_blank" rel="noopener">View →</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="item-name">Aesop Reverence Aromatique</span>
+              <span class="item-note">Hand wash, 500 ml</span>
+            </td>
+            <td>
+              <span class="mobile-label">Category</span>
+              <span class="tag">Home</span>
+            </td>
+            <td>
+              <span class="mobile-label">Priority</span>
+              <span class="priority"><span class="dot dot-low"></span>Low</span>
+            </td>
+            <td>
+              <span class="mobile-label">Price</span>
+              <span class="price">~$45</span>
+            </td>
+            <td>
+              <span class="mobile-label">Link</span>
+              <a class="link-btn" href="https://www.aesop.com" target="_blank" rel="noopener">View →</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="item-name">The Art of Doing Science and Art</span>
+              <span class="item-note">Book by Hamming — hardcover preferred</span>
+            </td>
+            <td>
+              <span class="mobile-label">Category</span>
+              <span class="tag">Books</span>
+            </td>
+            <td>
+              <span class="mobile-label">Priority</span>
+              <span class="priority"><span class="dot dot-medium"></span>Medium</span>
+            </td>
+            <td>
+              <span class="mobile-label">Price</span>
+              <span class="price">~$35</span>
+            </td>
+            <td>
+              <span class="mobile-label">Link</span>
+              <a class="link-btn" href="https://www.amazon.com" target="_blank" rel="noopener">View →</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
     </div>
-    <div class="form-group">
-      <label>Priority</label>
-      <div class="star-picker" id="star-picker">
-        <button type="button" data-val="1" onclick="setPriority(1)">☆</button>
-        <button type="button" data-val="2" onclick="setPriority(2)">☆</button>
-        <button type="button" data-val="3" onclick="setPriority(3)">☆</button>
-        <button type="button" data-val="4" onclick="setPriority(4)">☆</button>
-        <button type="button" data-val="5" onclick="setPriority(5)">☆</button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Notes (optional)</label>
-      <textarea id="f-notes" placeholder="Size, color, why you want it…"></textarea>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" onclick="saveWish()">Save wish</button>
-    </div>
+
+    <footer>
+      <span>✦ Feel free to gift any of these!</span>
+      <span id="footer-date"></span>
+    </footer>
+
   </div>
-</div>
 
-<script>
-  let wishes = JSON.parse(localStorage.getItem('wishlist_v2') || '[]');
-  let currentFilter = 'all';
-  let editingId = null;
-  let selectedPriority = 3;
+  <script>
+    // Auto-count stats
+    const rows = document.querySelectorAll('#wishlist-table tbody tr');
+    const highRows = document.querySelectorAll('.dot-high');
+    document.getElementById('total-count').textContent = rows.length;
+    document.getElementById('high-count').textContent = highRows.length;
 
-  function save() {
-    localStorage.setItem('wishlist_v2', JSON.stringify(wishes));
-  }
-
-  function genId() {
-    return Date.now().toString(36) + Math.random().toString(36).slice(2);
-  }
-
-  function setPriority(val) {
-    selectedPriority = val;
-    const btns = document.querySelectorAll('#star-picker button');
-    btns.forEach((b, i) => {
-      b.textContent = i < val ? '★' : '☆';
-      b.style.color = i < val ? '#C9973B' : '#ccc';
-    });
-  }
-
-  function openModal(id = null) {
-    editingId = id;
-    selectedPriority = 3;
-    const overlay = document.getElementById('modal-overlay');
-    document.getElementById('modal-title').textContent = id ? 'Edit wish' : 'New wish';
-    if (id) {
-      const w = wishes.find(x => x.id === id);
-      document.getElementById('f-name').value = w.name;
-      document.getElementById('f-category').value = w.category;
-      document.getElementById('f-price').value = w.price || '';
-      document.getElementById('f-url').value = w.url || '';
-      document.getElementById('f-notes').value = w.notes || '';
-      selectedPriority = w.priority || 3;
-    } else {
-      document.getElementById('f-name').value = '';
-      document.getElementById('f-category').value = 'wish';
-      document.getElementById('f-price').value = '';
-      document.getElementById('f-url').value = '';
-      document.getElementById('f-notes').value = '';
-    }
-    setPriority(selectedPriority);
-    overlay.classList.add('open');
-    setTimeout(() => document.getElementById('f-name').focus(), 100);
-  }
-
-  function closeModal() {
-    document.getElementById('modal-overlay').classList.remove('open');
-    editingId = null;
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('modal-overlay')) closeModal();
-  }
-
-  function saveWish() {
-    const name = document.getElementById('f-name').value.trim();
-    if (!name) {
-      document.getElementById('f-name').focus();
-      document.getElementById('f-name').style.borderColor = '#C4622D';
-      return;
-    }
-    document.getElementById('f-name').style.borderColor = '';
-    const wish = {
-      id: editingId || genId(),
-      name,
-      category: document.getElementById('f-category').value,
-      price: document.getElementById('f-price').value.trim(),
-      url: document.getElementById('f-url').value.trim(),
-      notes: document.getElementById('f-notes').value.trim(),
-      priority: selectedPriority,
-      received: false,
-      createdAt: editingId ? (wishes.find(x=>x.id===editingId)||{}).createdAt || Date.now() : Date.now()
-    };
-    if (editingId) {
-      wish.received = (wishes.find(x=>x.id===editingId)||{}).received || false;
-      const idx = wishes.findIndex(x => x.id === editingId);
-      wishes[idx] = wish;
-    } else {
-      wishes.unshift(wish);
-    }
-    save();
-    closeModal();
-    render();
-  }
-
-  function toggleReceived(id) {
-    const w = wishes.find(x => x.id === id);
-    if (w) { w.received = !w.received; save(); render(); }
-  }
-
-  function deleteWish(id) {
-    wishes = wishes.filter(x => x.id !== id);
-    save(); render();
-  }
-
-  function starsHtml(n) {
-    let h = '';
-    for (let i = 1; i <= 5; i++) {
-      h += `<span class="star ${i <= n ? 'filled' : 'empty'}">${i <= n ? '★' : '☆'}</span>`;
-    }
-    return h;
-  }
-
-  function render() {
-    const grid = document.getElementById('wishlist-grid');
-    const empty = document.getElementById('empty-state');
-    const filtered = currentFilter === 'all' ? wishes : wishes.filter(w => w.category === currentFilter);
-
-    document.getElementById('stat-count').textContent = wishes.length;
-    document.getElementById('stat-received').textContent = wishes.filter(w => w.received).length;
-
-    if (filtered.length === 0) {
-      grid.innerHTML = '';
-      empty.classList.add('visible');
-      return;
-    }
-    empty.classList.remove('visible');
-
-    grid.innerHTML = filtered.map(w => `
-      <div class="wish-card ${w.received ? 'received' : ''}" id="card-${w.id}">
-        <div class="card-top">
-          <div class="wish-name">${escHtml(w.name)}</div>
-          <span class="category-badge cat-${w.category}">${w.category}</span>
-        </div>
-        <div class="priority-stars">${starsHtml(w.priority || 3)}</div>
-        ${w.price || w.url ? `
-        <div class="wish-meta">
-          ${w.price ? `<span class="wish-price">${escHtml(w.price)}</span>` : ''}
-          ${w.url ? `<a class="wish-link" href="${escHtml(w.url)}" target="_blank" rel="noopener">View item</a>` : ''}
-        </div>` : ''}
-        ${w.notes ? `<div class="wish-notes">"${escHtml(w.notes)}"</div>` : ''}
-        <div class="card-actions">
-          <button class="btn-action btn-received ${w.received ? 'active' : ''}" onclick="toggleReceived('${w.id}')">
-            ${w.received ? '✓ Received' : 'Mark received'}
-          </button>
-          <button class="btn-action" onclick="openModal('${w.id}')">Edit</button>
-          <button class="btn-action btn-delete" onclick="deleteWish('${w.id}')">✕</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function escHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  document.getElementById('filter-tabs').addEventListener('click', e => {
-    const btn = e.target.closest('.filter-tab');
-    if (!btn) return;
-    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.cat;
-    render();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openModal(); }
-  });
-
-  setPriority(3);
-  render();
-</script>
+    // Footer date
+    document.getElementById('footer-date').textContent =
+      new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
+  </script>
 </body>
 </html>
